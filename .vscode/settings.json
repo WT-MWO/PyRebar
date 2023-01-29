@@ -1,0 +1,19 @@
+{
+    "python.languageServer": "Pylance",
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "git.autofetch": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        "--max-line-length=88",
+        "--extend-ignore=E203"
+    ],
+    "editor.renderWhitespace": "all",
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "python.autoComplete.extraPaths": [
+        "C:\\Users\\mwo\\AppData\\Local\\Programs\\Python\\Python311\\ironpython-stubs-master\\release\\stubs.min"
+    ],
+    "python.analysis.extraPaths": [
+        "C:\\Users\\mwo\\AppData\\Local\\Programs\\Python\\Python311\\ironpython-stubs-master\\release\\stubs.min"
+    ],
+}

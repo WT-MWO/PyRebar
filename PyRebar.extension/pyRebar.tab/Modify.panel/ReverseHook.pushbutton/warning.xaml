@@ -1,0 +1,19 @@
+<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Title="Warning!"
+	Width="350"
+	ResizeMode="NoResize"
+	SizeToContent="Height">
+	<StackPanel Margin="10">
+		<TextBlock
+			TextWrapping="Wrap">
+			<Run
+				Text="Sorry! Operation failed. This tool doesn't work in combination of selected 'Shape Driven' rebar and enabled option 'Include hooks in Rebar Shape definition'. " />
+		</TextBlock>
+		<Button
+			Content="Button"
+			Width="110"
+			Height="46" />
+	</StackPanel>
+</Window>

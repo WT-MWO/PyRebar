@@ -8,23 +8,13 @@ from Autodesk.Revit import DB
 from Autodesk.Revit.UI import *
 from Autodesk.Revit.DB import *
 
-# import clr
-
-# clr.AddReference("System.Windows.Forms")
-# clr.AddReference("Ironpython.Wpf")
 from pyrevit import script
-
-# import wpf
-# from System import Windows
-from .....lib.warning_view import WarningWindow
-from .....lib.rebar_selector import RebarSelector
+from pyrevit import forms
+from rebar_selector import RebarSelector
 
 doc = __revit__.ActiveUIDocument.Document
 uidoc = __revit__.ActiveUIDocument
 view = doc.ActiveView
-
-xaml_file = script.get_bundle_file("warning.xaml")
-
 
 def can_reverse(rebar):
     if rebar.IsRebarShapeDriven() and defines_hooks:
@@ -33,7 +23,6 @@ def can_reverse(rebar):
         return True
     else:
         print("Unknown rebar type")
-
 
 # Get reinforcement settings
 settings = DB.Structure.ReinforcementSettings.GetReinforcementSettings(doc)
@@ -47,9 +36,9 @@ elements = rs.get_rebars()
 tg = TransactionGroup(doc, "ReverseHook")
 tg.Start()
 
-
 # TODO: Make this flexible and working for single bars and rebar groups.
 not_reversed_rebars = []
+reversed_rebars = []
 
 for rebar in elements:
     if can_reverse(rebar):
@@ -57,8 +46,8 @@ for rebar in elements:
         orient1 = rebar.GetHookOrientation(1)
         left = DB.Structure.RebarHookOrientation.Left
         right = DB.Structure.RebarHookOrientation.Right
-        print(orient0)
-        print(orient1)
+        reversed_rebars.append(
+            rebar.LookupParameter("Rebar Number").AsString())
         t = Transaction(doc, "Reverse")
         t.Start()
         if orient0 == right:
@@ -71,19 +60,14 @@ for rebar in elements:
             rebar.SetHookOrientation(1, right)
         t.Commit()
     else:
-        number = rebar.LookupParameter("Number").AsString()
+        number = rebar.LookupParameter("Rebar Number").AsString()
         not_reversed_rebars.append(number)
-
 tg.Assimilate()
 
-if len(not_reversed_rebars > 0):
-    message = "This tool doesn't work when you pick Shape Driven rebar and\
-    'Include hooks in Rebar Shape definition' option is enabled.\
-    Numbers of rebars not modified: {}".format(
+# Alert when there are non modified rebars
+if len(not_reversed_rebars) > 0:
+    message = "Operation failed! Reason: 'Include hooks in Rebar Shape definition' option is enabled.\n"+\
+    + "Quantity of modified rebars: {}".format(len(reversed_rebars)) + "Rebar numbers not modified: {}".format(
         not_reversed_rebars
     )
-    WarningWindow(
-        xaml_file=xaml_file,
-        label_text="Operation failed!",
-        text_content=message,
-    ).ShowDialog()
+    forms.alert(msg=message, ok=True, exitscript=True)

@@ -1,12 +1,17 @@
+from Autodesk.Revit.UI import *
+
 class RebarSelector:
     def __init__(self, doc, uidoc):
         self.doc = doc
         self.uidoc = uidoc
 
     def is_rebar(self, selection):
+        """Checks if object is Rebar type."""
         pass
 
     def get_rebars(self):
+        """Gets Rebar type objects from selected elements, if no objects selected
+        triggers Pick Objects method"""
         selection = [
             self.doc.GetElement(x) for x in self.uidoc.Selection.GetElementIds()
         ]

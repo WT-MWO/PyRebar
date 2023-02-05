@@ -16,6 +16,7 @@ doc = __revit__.ActiveUIDocument.Document
 uidoc = __revit__.ActiveUIDocument
 view = doc.ActiveView
 
+
 def can_reverse(rebar):
     if rebar.IsRebarShapeDriven() and defines_hooks:
         return False
@@ -23,6 +24,7 @@ def can_reverse(rebar):
         return True
     else:
         print("Unknown rebar type")
+
 
 # Get reinforcement settings
 settings = DB.Structure.ReinforcementSettings.GetReinforcementSettings(doc)
@@ -46,8 +48,7 @@ for rebar in elements:
         orient1 = rebar.GetHookOrientation(1)
         left = DB.Structure.RebarHookOrientation.Left
         right = DB.Structure.RebarHookOrientation.Right
-        reversed_rebars.append(
-            rebar.LookupParameter("Rebar Number").AsString())
+        reversed_rebars.append(rebar.LookupParameter("Rebar Number").AsString())
         t = Transaction(doc, "Reverse")
         t.Start()
         if orient0 == right:
@@ -66,8 +67,9 @@ tg.Assimilate()
 
 # Alert when there are non modified rebars
 if len(not_reversed_rebars) > 0:
-    message = "Operation failed! Reason: 'Include hooks in Rebar Shape definition' option is enabled.\n"+\
-    + "Quantity of modified rebars: {}".format(len(reversed_rebars)) + "Rebar numbers not modified: {}".format(
-        not_reversed_rebars
+    message = (
+        "Operation failed! Reason: 'Include hooks in Rebar Shape definition' option is enabled.\n"
+        + +"Quantity of modified rebars: {}".format(len(reversed_rebars))
+        + "Rebar numbers not modified: {}".format(not_reversed_rebars)
     )
     forms.alert(msg=message, ok=True, exitscript=True)

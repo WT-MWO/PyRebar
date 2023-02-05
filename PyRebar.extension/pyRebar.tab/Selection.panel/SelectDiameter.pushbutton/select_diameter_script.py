@@ -8,3 +8,11 @@ from Autodesk.Revit.DB import *
 doc = __revit__.ActiveUIDocument.Document
 uidoc = __revit__.ActiveUIDocument
 view = doc.ActiveView
+
+
+cmbBox.ItemsSource = sorted(
+    [
+        x.GetFillPattern().Name
+        for x in revit.query.get_all_fillpattern_elements(DB.FillPatternTarget.Drafting)
+    ]
+)

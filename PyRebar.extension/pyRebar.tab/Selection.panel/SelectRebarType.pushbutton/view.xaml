@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="btnSelect" Content="Select" Height="20" Width="70" Margin="0,5,0,5" Click="window_close"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="btnSelect" Content="Select" Height="20" Width="70" Margin="0,5,0,5" Click="select_rebar_type"/>
             <Button Grid.Row="0" Grid.Column="0" x:Name="btnCancel" Content="Cancel" Height="20" Width="70" Margin="0,5,0,5" Click="window_close"/>
         </Grid>
        

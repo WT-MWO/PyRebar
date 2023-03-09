@@ -62,6 +62,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5"/>
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="65"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="5"/>
                     </Grid.RowDefinitions>
@@ -77,21 +78,39 @@
                         <Button Grid.Row="0" Grid.Column="2" x:Name="btnAdd" Content="Add" Height="20" Width="70" VerticalAlignment="Center" Margin="0,0,0,0" Click="add_parameter"/>
                         <Button Grid.Row="0" Grid.Column="3" x:Name="btnRemove" Content="Remove selected" Height="20" Width="100" VerticalAlignment="Center" Margin="0,0,0,0" Click="add_parameter"/>
                     </Grid>
-                    
-                    
-                    
+
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="16"/>
                         </Grid.ColumnDefinitions>
-                        <ListBox Grid.Row="0" Grid.Column="1">
-                            <ListBoxItem>
+                        <ListBox Grid.Row="2" Grid.Column="1" x:Name="lstBoxDef">
+                            <ListBoxItem Foreground="Gray">
                                 Partition
                             </ListBoxItem>
+                            <ListBoxItem Foreground="Gray">
+                                Comment
+                            </ListBoxItem>
+                            <ListBoxItem Foreground="Gray">
+                                Rebar Number
+                            </ListBoxItem>
                         </ListBox>
+
                     </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                    <ScrollViewer Grid.Row="3" Margin="5,0,0,0">
+                        <ListBox Grid.Row="3" Grid.Column="2" x:Name="lstBoxUser">
+                            
+                        </ListBox>
+                    </ScrollViewer>
+
 
                 </Grid>
 

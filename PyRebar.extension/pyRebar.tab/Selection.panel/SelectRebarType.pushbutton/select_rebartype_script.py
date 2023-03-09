@@ -51,7 +51,7 @@ class MainWindow(WPFWindow):
         self.cmbBox.ItemsSource = sorted(key for key in rebar_types)
         self.ShowDialog()
 
-    def get_rebars_id_of_type(self, rebar_collector, type_id):
+    def _get_rebars_id_of_type(self, rebar_collector, type_id):
         rebar_ids = []
         for rebar in rebar_collector:
             if rebar.GetTypeId() == type_id:
@@ -65,7 +65,7 @@ class MainWindow(WPFWindow):
         # idlist.Add(
         #     self.get_rebars_id_of_type(rebar_collector=rebar_collector, type_id=id_type)
         # )
-        for x in self.get_rebars_id_of_type(
+        for x in self._get_rebars_id_of_type(
             rebar_collector=rebar_collector, type_id=id_type
         ):
             idlist.Add(x)

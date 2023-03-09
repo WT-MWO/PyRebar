@@ -33,7 +33,7 @@ class RebarSelector:
         selection = [
             self.doc.GetElement(x) for x in self.uidoc.Selection.GetElementIds()
         ]
-        # If no object is selected prompt user to select
+        # If no object is selected get all rebars
         if len(selection) < 1:
             elements = (
                 DB.FilteredElementCollector(self.doc)

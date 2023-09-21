@@ -9,22 +9,32 @@ class RebarSelector:
 
     def is_rebar(self, selection):
         """Checks if object is Rebar type."""
-        pass
+        for obj in selection:
+            return obj.Category.IsBuiltInCategoryValid(DB.BuiltInCategory.OST_Rebar)
+
+    def is_rebar_group(rebar_object):
+        n_bars = rebar_object.NumberOfBarPositions
+        if n_bars > 1:
+            return True
+        else:
+            return False
 
     def get_rebars(self):
         """Gets Rebar type objects from selected elements, if no objects selected
         triggers Pick Objects method"""
+        elements = []
         selection = [
             self.doc.GetElement(x) for x in self.uidoc.Selection.GetElementIds()
         ]
         # If no object is selected prompt user to select
         if len(selection) < 1:
-            selection = self.uidoc.Selection.PickObjects(
+            selected_obj = self.uidoc.Selection.PickObjects(
                 Selection.ObjectType.Element, "Choose rebars"
             )
-            elements = [self.doc.GetElement(el_id) for el_id in selection]
-        else:
-            elements = selection
+            selection = [self.doc.GetElement(el_id) for el_id in selected_obj]
+        for e in selection:
+            if self.is_rebar(e):
+                elements.append(e)
         return elements
 
     def get_all_rebars(self):
@@ -41,5 +51,8 @@ class RebarSelector:
                 .WhereElementIsNotElementType()
             )
         else:
-            elements = selection
+            elements = []
+            for e in selection:
+                if self.is_rebar(e):
+                    elements.append(e)
         return elements

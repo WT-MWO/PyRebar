@@ -24,9 +24,7 @@ view = doc.ActiveView
 xaml_file = script.get_bundle_file("view.xaml")
 
 rebar_type_collector = (
-    DB.FilteredElementCollector(doc)
-    .OfCategory(DB.BuiltInCategory.OST_Rebar)
-    .WhereElementIsElementType()
+    DB.FilteredElementCollector(doc).OfCategory(DB.BuiltInCategory.OST_Rebar).WhereElementIsElementType()
 )
 
 
@@ -65,9 +63,7 @@ class MainWindow(WPFWindow):
         # idlist.Add(
         #     self.get_rebars_id_of_type(rebar_collector=rebar_collector, type_id=id_type)
         # )
-        for x in self._get_rebars_id_of_type(
-            rebar_collector=rebar_collector, type_id=id_type
-        ):
+        for x in self._get_rebars_id_of_type(rebar_collector=rebar_collector, type_id=id_type):
             idlist.Add(x)
         uidoc.Selection.SetElementIds(idlist)
         self.Close()

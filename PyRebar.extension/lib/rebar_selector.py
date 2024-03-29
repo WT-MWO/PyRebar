@@ -23,26 +23,23 @@ class RebarSelector:
         """Gets Rebar type objects from selected elements, if no objects selected
         triggers Pick Objects method"""
         elements = []
-        selection = [
-            self.doc.GetElement(x) for x in self.uidoc.Selection.GetElementIds()
-        ]
+        selection = [self.doc.GetElement(x) for x in self.uidoc.Selection.GetElementIds()]
         # If no object is selected prompt user to select
         if len(selection) < 1:
-            selected_obj = self.uidoc.Selection.PickObjects(
-                Selection.ObjectType.Element, "Choose rebars"
-            )
+            selected_obj = self.uidoc.Selection.PickObjects(Selection.ObjectType.Element, "Choose rebars")
             selection = [self.doc.GetElement(el_id) for el_id in selected_obj]
-        for e in selection:
-            if self.is_rebar(e):
-                elements.append(e)
+        elif len(selection) == 1:
+            elements.append(selection[0])
+        else:
+            for e in selection:
+                if self.is_rebar(e):
+                    elements.append(e)
         return elements
 
     def get_all_rebars(self):
         """Gets Rebar type objects from selected elements, if no objects selected
         gets all rebars in view"""
-        selection = [
-            self.doc.GetElement(x) for x in self.uidoc.Selection.GetElementIds()
-        ]
+        selection = [self.doc.GetElement(x) for x in self.uidoc.Selection.GetElementIds()]
         # If no object is selected get all rebars
         if len(selection) < 1:
             elements = (

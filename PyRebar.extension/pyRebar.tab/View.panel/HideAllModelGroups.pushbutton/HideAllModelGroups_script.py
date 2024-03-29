@@ -1,3 +1,6 @@
+__doc__ = """Hide all Model groups in the view."""
+__title__ = "Hide all model groups"
+__author__ = "Wolinski"
 import Autodesk
 from Autodesk.Revit import DB
 from Autodesk.Revit.UI import *
@@ -9,7 +12,9 @@ view = doc.ActiveView
 
 groups_collector = (
     DB.FilteredElementCollector(doc)
-    .OfCategory(BuiltInCategory.OST_IOSModelGroups).WhereElementIsNotElementType().ToElementIds()
+    .OfCategory(BuiltInCategory.OST_IOSModelGroups)
+    .WhereElementIsNotElementType()
+    .ToElementIds()
 )
 
 
@@ -22,5 +27,3 @@ for group in groups_collector:
             view.HideElements(groups_collector)
 
 t.Commit()
-
-#print("Complete")

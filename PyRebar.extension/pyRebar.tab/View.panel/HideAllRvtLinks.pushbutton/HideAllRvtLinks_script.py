@@ -1,3 +1,6 @@
+__doc__ = """Hide all Revit links in the view."""
+__title__ = "Hide all .rvt links"
+__author__ = "Wolinski"
 import Autodesk
 from Autodesk.Revit import DB
 from Autodesk.Revit.UI import *
@@ -9,7 +12,9 @@ view = doc.ActiveView
 
 link_collector = (
     DB.FilteredElementCollector(doc)
-    .OfCategory(BuiltInCategory.OST_RvtLinks).OfClass(DB.RevitLinkInstance).ToElementIds()
+    .OfCategory(BuiltInCategory.OST_RvtLinks)
+    .OfClass(DB.RevitLinkInstance)
+    .ToElementIds()
 )
 
 
@@ -23,4 +28,4 @@ for link in link_collector:
 
 t.Commit()
 
-#print("Complete")
+# print("Complete")

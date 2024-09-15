@@ -7,10 +7,12 @@ class RebarSelector:
         self.doc = doc
         self.uidoc = uidoc
 
-    def is_rebar(self, selection):
+    def is_rebar(self, obj):
         """Checks if object is Rebar type."""
-        for obj in selection:
-            return obj.Category.IsBuiltInCategoryValid(DB.BuiltInCategory.OST_Rebar)
+        # for obj in selection:
+        #     return obj.Category.IsBuiltInCategoryValid(DB.BuiltInCategory.OST_Rebar)
+        # for obj in selection:
+        return obj.Category.IsBuiltInCategoryValid(DB.BuiltInCategory.OST_Rebar)
 
     def is_rebar_group(rebar_object):
         n_bars = rebar_object.NumberOfBarPositions

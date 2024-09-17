@@ -6,7 +6,8 @@ from Autodesk.Revit import DB
 from Autodesk.Revit.UI import *
 from Autodesk.Revit.DB import *
 from rebar_selector import RebarSelector
-from rebar_cog import RebarCoG
+from .rebar_cog import RebarCoG
+from .visualize_point import visualize_point
 
 ROUNDING = 3
 
@@ -33,6 +34,8 @@ mass_text = "Total mass: " + str(round(total_mass, ROUNDING))
 print(cog_text)
 print(mass_text)
 
-# centroid = DB.XYZ(final_cog[0], final_cog[1], final_cog[2])
+centroid = DB.XYZ(final_cog[0], final_cog[1], final_cog[2])
 
-# point = DB.Point.Create(centroid)
+diameter = 2.0
+
+visualize_point(doc, centroid, diameter)

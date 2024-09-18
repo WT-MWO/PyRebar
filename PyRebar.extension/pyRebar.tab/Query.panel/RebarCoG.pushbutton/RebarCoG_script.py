@@ -6,8 +6,9 @@ from Autodesk.Revit import DB
 from Autodesk.Revit.UI import *
 from Autodesk.Revit.DB import *
 from rebar_selector import RebarSelector
-from .rebar_cog import RebarCoG
-from .visualize_point import visualize_point
+from rebar_cog import RebarCoG
+from visualize_point import visualize_point
+from pyrevit import forms
 
 ROUNDING = 3
 
@@ -34,8 +35,10 @@ mass_text = "Total mass: " + str(round(total_mass, ROUNDING))
 print(cog_text)
 print(mass_text)
 
-centroid = DB.XYZ(final_cog[0], final_cog[1], final_cog[2])
 
-diameter = 2.0
-
-visualize_point(doc, centroid, diameter)
+visualize = forms.alert("Do you want to visualize CoG?", ok=False, yes=True, no=True)
+if visualize:
+    K = 304.8
+    centroid = DB.XYZ(final_cog[0] / K, final_cog[1] / K, final_cog[2] / K)
+    diameter = 0.2
+    visualize_point(doc, centroid, diameter)

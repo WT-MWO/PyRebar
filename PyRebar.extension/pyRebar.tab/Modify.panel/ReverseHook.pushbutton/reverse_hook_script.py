@@ -34,43 +34,45 @@ defines_hooks = settings.RebarShapeDefinesHooks
 rs = RebarSelector(doc, uidoc)
 elements = rs.get_rebars()
 
-# Handling transactions
-tg = DB.TransactionGroup(doc, "ReverseHook")
-tg.Start()
 
 # TODO: Make this flexible and working for single bars and rebar groups.
 not_reversed_rebars = []
 reversed_rebars = []
 
-for rebar in elements:
-    if can_reverse(rebar):
-        orient0 = rebar.GetHookOrientation(0)
-        orient1 = rebar.GetHookOrientation(1)
-        left = DB.Structure.RebarHookOrientation.Left
-        right = DB.Structure.RebarHookOrientation.Right
-        reversed_rebars.append(rebar.LookupParameter("Rebar Number").AsString())
-        t = DB.Transaction(doc, "Reverse")
-        t.Start()
-        if orient0 == right:
-            rebar.SetHookOrientation(0, left)
-        elif orient0 == left:
-            rebar.SetHookOrientation(0, right)
-        if orient1 == right:
-            rebar.SetHookOrientation(1, left)
-        elif orient1 == left:
-            rebar.SetHookOrientation(1, right)
-        t.Commit()
-    else:
-        number = rebar.LookupParameter("Rebar Number").AsString()
-        not_reversed_rebars.append(number)
-tg.Assimilate()
-
-# Alert when there are non modified rebars
-if len(not_reversed_rebars) > 0:
-    message = (
-        "Operation failed! Reason: 'Include hooks in Rebar Shape definition' option is enabled.\n"
-        + "Quantity of modified rebars: {}".format(len(reversed_rebars))
-        + "\n"
-        + "Rebar numbers not modified: {}".format(not_reversed_rebars)
-    )
+if not defines_hooks:
+    # Handling transactions
+    tg = DB.TransactionGroup(doc, "ReverseHook")
+    tg.Start()
+    for rebar in elements:
+        if can_reverse(rebar):
+            orient0 = rebar.GetHookOrientation(0)
+            orient1 = rebar.GetHookOrientation(1)
+            left = DB.Structure.RebarHookOrientation.Left
+            right = DB.Structure.RebarHookOrientation.Right
+            reversed_rebars.append(rebar.LookupParameter("Rebar Number").AsString())
+            t = DB.Transaction(doc, "Reverse")
+            t.Start()
+            if orient0 == right:
+                rebar.SetHookOrientation(0, left)
+            elif orient0 == left:
+                rebar.SetHookOrientation(0, right)
+            if orient1 == right:
+                rebar.SetHookOrientation(1, left)
+            elif orient1 == left:
+                rebar.SetHookOrientation(1, right)
+            t.Commit()
+        else:
+            number = rebar.LookupParameter("Rebar Number").AsString()
+            not_reversed_rebars.append(number)
+    tg.Assimilate()
+    if len(not_reversed_rebars) > 0:
+        message = (
+            "Operation failed!\n"
+            + "Quantity of modified rebars: {}".format(len(reversed_rebars))
+            + "\n"
+            + "Rebar numbers not modified: {}".format(not_reversed_rebars)
+        )
+        forms.alert(msg=message, ok=True, exitscript=True)
+else:
+    message = "Operation failed! Reason: 'Include hooks in Rebar Shape definition' option is enabled."
     forms.alert(msg=message, ok=True, exitscript=True)

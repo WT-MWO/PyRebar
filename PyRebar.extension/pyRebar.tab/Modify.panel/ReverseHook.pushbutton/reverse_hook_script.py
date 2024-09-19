@@ -35,7 +35,7 @@ rs = RebarSelector(doc, uidoc)
 elements = rs.get_rebars()
 
 # Handling transactions
-tg = TransactionGroup(doc, "ReverseHook")
+tg = DB.TransactionGroup(doc, "ReverseHook")
 tg.Start()
 
 # TODO: Make this flexible and working for single bars and rebar groups.
@@ -49,7 +49,7 @@ for rebar in elements:
         left = DB.Structure.RebarHookOrientation.Left
         right = DB.Structure.RebarHookOrientation.Right
         reversed_rebars.append(rebar.LookupParameter("Rebar Number").AsString())
-        t = Transaction(doc, "Reverse")
+        t = DB.Transaction(doc, "Reverse")
         t.Start()
         if orient0 == right:
             rebar.SetHookOrientation(0, left)
@@ -69,7 +69,8 @@ tg.Assimilate()
 if len(not_reversed_rebars) > 0:
     message = (
         "Operation failed! Reason: 'Include hooks in Rebar Shape definition' option is enabled.\n"
-        + +"Quantity of modified rebars: {}".format(len(reversed_rebars))
+        + "Quantity of modified rebars: {}".format(len(reversed_rebars))
+        + "\n"
         + "Rebar numbers not modified: {}".format(not_reversed_rebars)
     )
     forms.alert(msg=message, ok=True, exitscript=True)

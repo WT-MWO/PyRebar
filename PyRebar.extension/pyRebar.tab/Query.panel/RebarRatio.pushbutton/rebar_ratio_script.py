@@ -100,7 +100,7 @@ if len(elements) > 1:
     for element in elements:
         if can_host_rebar(element):
             rebars = get_element_dependent_rebars(element)
-            volume, total_mass, ratio = calculate_ratio(element, rebars)
+            volume, total_mass, _ = calculate_ratio(element, rebars)
             volumes.append(volume)
             rebar_masses.append(total_mass)
     total_volume = sum(volumes)

@@ -1,6 +1,8 @@
 from Autodesk.Revit import DB
 import math
 
+FEET_TO_MM = 304.8  # Conversion from feet to mm
+
 
 class RebarCoG:
     def __init__(self, rebar_collector):
@@ -11,7 +13,8 @@ class RebarCoG:
         self.rebar_collector = rebar_collector
         self.multiplanaroption = DB.Structure.MultiplanarOption.IncludeAllMultiplanarCurves
 
-    def _is_rebar_group(self, rebar_object):
+    @staticmethod
+    def _is_rebar_group(rebar_object):
         """Checks if object is a rebar group
         Arg:
             rebar_object: DB.Structure.Rebar"""
@@ -21,7 +24,8 @@ class RebarCoG:
         else:
             return False
 
-    def _compute_segment_centroid(self, curve, diameter, index):
+    @staticmethod
+    def _compute_segment_centroid(curve, diameter, index):
         """Computes segment centroid.
         Arguments:
         curve (DB.Line or DB.Curve)
@@ -33,20 +37,20 @@ class RebarCoG:
             mass - float value in kg
         """
         # Conversion from feet to mm
-        k = 304.8
         r_o = 7.85e-6  # kg/mm3
         r = diameter / 2  # mm
         area = math.pi * r**2
-        length = curve.Length * k
+        length = curve.Length * FEET_TO_MM
         volume = area * length
         mass = volume * r_o
+        r = diameter / 2  # mm
         if isinstance(curve, DB.Line):
-            sp_X = curve.GetEndPoint(0).X * k
-            sp_Y = curve.GetEndPoint(0).Y * k
-            sp_Z = curve.GetEndPoint(0).Z * k
-            ep_X = curve.GetEndPoint(1).X * k
-            ep_Y = curve.GetEndPoint(1).Y * k
-            ep_Z = curve.GetEndPoint(1).Z * k
+            sp_X = curve.GetEndPoint(0).X * FEET_TO_MM
+            sp_Y = curve.GetEndPoint(0).Y * FEET_TO_MM
+            sp_Z = curve.GetEndPoint(0).Z * FEET_TO_MM
+            ep_X = curve.GetEndPoint(1).X * FEET_TO_MM
+            ep_Y = curve.GetEndPoint(1).Y * FEET_TO_MM
+            ep_Z = curve.GetEndPoint(1).Z * FEET_TO_MM
             cp_X = (sp_X + ep_X) / 2
             cp_Y = (sp_Y + ep_Y) / 2
             cp_Z = (sp_Z + ep_Z) / 2
@@ -54,14 +58,14 @@ class RebarCoG:
             centroid = [cp_X, cp_Y, cp_Z]
             return centroid, mass
         if isinstance(curve, DB.Arc):
-            arc_radius = curve.Radius * k
-            arc_center_X = curve.Center.X * k
-            arc_center_Y = curve.Center.Y * k
-            arc_center_Z = curve.Center.Z * k
+            arc_radius = curve.Radius * FEET_TO_MM
+            arc_center_X = curve.Center.X * FEET_TO_MM
+            arc_center_Y = curve.Center.Y * FEET_TO_MM
+            arc_center_Z = curve.Center.Z * FEET_TO_MM
             # Midpoint of arc
-            a_mp_X = curve.Evaluate(0.5, True).X * k
-            a_mp_Y = curve.Evaluate(0.5, True).Y * k
-            a_mp_Z = curve.Evaluate(0.5, True).Z * k
+            a_mp_X = curve.Evaluate(0.5, True).X * FEET_TO_MM
+            a_mp_Y = curve.Evaluate(0.5, True).Y * FEET_TO_MM
+            a_mp_Z = curve.Evaluate(0.5, True).Z * FEET_TO_MM
             # Calculate 'x' coordinate of centroid for arc
             circumference = 2 * math.pi * arc_radius
             theta = math.radians(length / circumference * 360)
@@ -93,7 +97,8 @@ class RebarCoG:
             centroid = [cp_X, cp_Y, cp_Z]  # OK
             return centroid, mass
 
-    def _compute_centroid(self, list_of_centroids, list_of_masses):
+    @staticmethod
+    def _compute_centroid(list_of_centroids, list_of_masses):
         """
         Arguments:
         List of centroids - centroid of each segment of bar
@@ -118,11 +123,13 @@ class RebarCoG:
         else:
             raise ZeroDivisionError
 
-    def _get_rebar_diam(self, rebar):
+    @staticmethod
+    def _get_rebar_diam(rebar):
         diam = rebar.LookupParameter("Bar Diameter")
         return diam.AsDouble() * 304.8
 
-    def _get_existing_bar_index(self, bar_object):
+    @staticmethod
+    def _get_existing_bar_index(bar_object):
         """Checks if rebar exists at given position (can be hidden or removed)
         Arguments:
             rebar_object: DB.Structure.Rebar

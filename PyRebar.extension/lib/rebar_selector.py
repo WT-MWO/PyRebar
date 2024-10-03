@@ -61,3 +61,12 @@ class RebarSelector:
                 if self.is_rebar(e):
                     elements.append(e)
         return elements
+
+    def get_all_model_rebars(self):
+        """Gets Rebar all rebars in view"""
+        elements = (
+            DB.FilteredElementCollector(self.doc)
+            .OfCategory(DB.BuiltInCategory.OST_Rebar)
+            .WhereElementIsNotElementType()
+        )
+        return elements

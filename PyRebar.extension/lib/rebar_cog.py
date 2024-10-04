@@ -132,7 +132,7 @@ class RebarCoG:
     def _get_existing_bar_index(bar_object):
         """Checks if rebar exists at given position (can be hidden or removed)
         Arguments:
-            rebar_object: DB.Structure.Rebar
+            rebar_object(DB.Structure.Rebar): the rebar object
         Returns:
             indexes(list(int))"""
         indexes = []
@@ -142,7 +142,26 @@ class RebarCoG:
                 indexes.append(i)
         return indexes
 
+    def _get_curve_from_group(self, rebar, index):
+        """Returns a curve from rebar at given index from rebar group
+        Arguments:
+            rebar (DB.Structure.Rebar): the rebar object
+            index (int): the index of a bar in group
+        Returns:
+            DB.Line or DB.Curve"""
+        if (
+            rebar.DistributionType == DB.Structure.DistributionType.Uniform
+            or DB.Structure.DistributionType.VaryingLength
+        ):
+            rebar_curve = rebar.GetTransformedCenterlineCurves(False, False, False, self.multiplanaroption, index)
+        else:
+            rebar_curve = rebar.GetCenterlineCurves(False, False, False, self.multiplanaroption, index)
+        return rebar_curve
+
     def get_cog(self):
+        """Calculates the CoG and mass of selected rebars
+        Returns:
+            list[list[float], float]"""
         all_bar_centroids = []
         all_bar_masses = []
         for rebar in self.rebar_collector:
@@ -151,15 +170,7 @@ class RebarCoG:
             if self._is_rebar_group(rebar_object=rebar):
                 # Compute centroid for each bar in group
                 for i in self._get_existing_bar_index(rebar):
-                    if (
-                        rebar.DistributionType == DB.Structure.DistributionType.Uniform
-                        or DB.Structure.DistributionType.VaryingLength
-                    ):
-                        rebar_curve = rebar.GetTransformedCenterlineCurves(
-                            False, False, False, self.multiplanaroption, i
-                        )
-                    else:
-                        rebar_curve = rebar.GetCenterlineCurves(False, False, False, self.multiplanaroption, i)
+                    rebar_curve = self._get_curve_from_group(rebar, i)
                     # Compute centroid for each segment
                     centroids = []
                     masses = []

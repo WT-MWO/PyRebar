@@ -12,6 +12,7 @@ from pyrevit import script
 from pyrevit import forms
 from rebar_selector import RebarSelector
 
+
 doc = __revit__.ActiveUIDocument.Document
 uidoc = __revit__.ActiveUIDocument
 view = doc.ActiveView

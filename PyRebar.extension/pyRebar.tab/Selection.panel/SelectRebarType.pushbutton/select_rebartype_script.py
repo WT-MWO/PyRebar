@@ -57,7 +57,7 @@ class MainWindow(WPFWindow):
         return rebar_ids
 
     def select_rebar_type(self, sender, args):
-        idlist = List[ElementId]()
+        idlist = List[DB.ElementId]()
         name_to_select = self.cmbBox.SelectedItem
         id_type = rebar_types[name_to_select]
         # idlist.Add(

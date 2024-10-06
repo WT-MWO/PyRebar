@@ -5,19 +5,17 @@ import Autodesk
 from Autodesk.Revit import DB
 from Autodesk.Revit.UI import *
 from Autodesk.Revit.DB import *
+from rebar_selector import RebarSelector
 
 doc = __revit__.ActiveUIDocument.Document
 uidoc = __revit__.ActiveUIDocument
 view = doc.ActiveView
 
-rebar_collector = (
-    DB.FilteredElementCollector(doc)
-    .OfCategory(DB.BuiltInCategory.OST_Rebar)
-    .WhereElementIsNotElementType()
-)
+rs = RebarSelector(doc, uidoc)
+rebar_collector = rs.get_rebars()
 x = True
 
-t = Transaction(doc, "Unobscured")
+t = DB.Transaction(doc, "Unobscured")
 t.Start()
 for rebar in rebar_collector:
     rebar.SetUnobscuredInView(view, x)

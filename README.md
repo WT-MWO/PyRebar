@@ -1,5 +1,5 @@
 # PyRebar
-[PyRevit] (https://github.com/pyrevitlabs/pyRevit/tree/master) extension for Autodesk Revit :registered: reinforcement modelling. 
+[PyRevit](https://github.com/pyrevitlabs/pyRevit/tree/master) extension for Autodesk Revit:registered: reinforcement modelling. 
 This is a toolkit of useful scripts increasing productivity during reinforcement detailing.
 
 ## Features

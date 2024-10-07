@@ -12,7 +12,7 @@ uidoc = __revit__.ActiveUIDocument
 view = doc.ActiveView
 
 rs = RebarSelector(doc, uidoc)
-rebar_collector = rs.get_rebars()
+rebar_collector = rs.get_all_rebars()
 
 x = False
 

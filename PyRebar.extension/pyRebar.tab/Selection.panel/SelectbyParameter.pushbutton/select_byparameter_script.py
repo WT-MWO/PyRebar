@@ -48,20 +48,19 @@ class MainWindow(WPFWindow):
         """Closes opened xaml window."""
         self.Close()
 
-    def select_by_parameter(self):
+    def select_rebar_by_parameter(self, sender, args):
         """Selects rebars with given parameters"""
         parameter_name = self.cmbBox.SelectedItem
         parameter_value = self.txtBoxValue.Text
-
+        print(parameter_name)
+        print(parameter_value)
         # TODO: This can be handled non invasively e.g. with message box warning
         if parameter_name is None or len(parameter_name) < 1:
             raise ValueError
         if parameter_value is None:
             raise ValueError
 
-        ids = get_rebar_ids_by_parameter(
-            parameter_name, parameter_value, rebar_collector
-        )
+        ids = get_rebar_ids_by_parameter(parameter_name, parameter_value, rebar_collector)
         uidoc.Selection.SetElementIds(ids)
         self.Close()
 

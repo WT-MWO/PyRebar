@@ -2,6 +2,8 @@
 [PyRevit](https://github.com/pyrevitlabs/pyRevit/tree/master) extension for Autodesk Revit :registered: reinforcement modelling. 
 This is a toolkit of useful scripts increasing productivity during reinforcement detailing.
 
+![Image_view](https://ibb.co/090gtSs)
+
 ## Features
 Most of the functions use **flexible selection** - you can preselect rebars to execute command only on them, or script is executed on all rebars in view if nothing is selected.
 

@@ -38,7 +38,7 @@
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="2" Grid.Column="1" x:Name="labelValue"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5" Content="Parameter value:"/>
-            <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtBoxValue" Text="Value" TextAlignment="Center" Width="140" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,5" />
+            <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtBoxValue" TextAlignment="Left" Width="140" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,5" />
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>

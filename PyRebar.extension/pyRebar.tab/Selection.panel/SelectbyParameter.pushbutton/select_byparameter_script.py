@@ -10,6 +10,7 @@ from pyrevit.forms import WPFWindow
 from System.Collections.Generic import List
 from System import String
 from rebar_selector import RebarSelector
+from pyrevit import forms
 
 doc = __revit__.ActiveUIDocument.Document
 uidoc = __revit__.ActiveUIDocument
@@ -61,15 +62,19 @@ class MainWindow(WPFWindow):
     def select_rebar_by_parameter(self, sender, args):
         """Selects rebars with given parameters"""
         parameter_name = self.cmbBox.SelectedItem
-        parameter_value = self.txtBoxValue.Text
-        # TODO: This can be handled non invasively e.g. with message box warning
+        parameter_value = self.txtBoxValue.Text  # try this with text value?
         if parameter_name is None or len(parameter_name) < 1:
-            raise ValueError
+            forms.alert("Parameter name field cannot be empty", ok=True)
         if parameter_value is None:
-            raise ValueError
-        ids = get_rebar_ids_by_parameter(rebar_collector, parameter_name, parameter_value)
+            forms.alert("Parameter value field cannot be empty", ok=True)
+        ids = get_rebar_ids_by_parameter(
+            rebar_collector, parameter_name, parameter_value
+        )
         uidoc.Selection.SetElementIds(ids)
         self.Close()
+
+    def ComboBox_TextChanged(self, sender, args):
+        return self.cmbBox.Text
 
 
 window = MainWindow(xaml_file=xaml_file)

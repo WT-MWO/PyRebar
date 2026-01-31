@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="1" Grid.Column="1" x:Name="labelParameter"  FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,0,5" Content="Parameter name:"/>
-            <ComboBox Grid.Row="1" Grid.Column="2" x:Name="cmbBox" Width=" 140" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,5" IsEditable="True" TextBoxBase.TextChanged="ComboBox_TextChanged"/>
+            <ComboBox Grid.Row="1" Grid.Column="2" x:Name="cmbBox" Width="140" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,5" IsEditable="True"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>

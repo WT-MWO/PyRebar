@@ -15,7 +15,7 @@ Most of the functions use **flexible selection** - you can preselect rebars to e
 
 #### Selection tab
 - **Same Number** - Selects all rebars with the same number within the same partition. :warning: Requires preselection of rebar.
-- **Select by Parameter** - (WIP) :construction: selects all rebar objects with assigned parameter.
+- **Select by Parameter** - Selects all rebar objects with assigned parameter. You can type your own parameter name and value, or choose from preselected.
 - **Select Rebar Type** - Selects all rebars in view by chosen type.
 
 #### Modify tab

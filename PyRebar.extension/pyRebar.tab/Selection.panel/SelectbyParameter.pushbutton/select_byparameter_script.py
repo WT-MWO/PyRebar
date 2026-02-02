@@ -8,7 +8,6 @@ from Autodesk.Revit.DB import *
 from pyrevit import script
 from pyrevit.forms import WPFWindow
 from System.Collections.Generic import List
-from System import String
 from rebar_selector import RebarSelector
 from conversion import FEET_TO_MM
 from pyrevit import forms

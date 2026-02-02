@@ -4,16 +4,12 @@ __author__ = "Wolinski"
 from Autodesk.Revit import DB
 from Autodesk.Revit.UI import *
 from Autodesk.Revit.DB import *
-import clr
 
-clr.AddReference("System.Windows.Forms")
-clr.AddReference("Ironpython.Wpf")
-import wpf
-from System import Windows
 from pyrevit import script
 from pyrevit.forms import WPFWindow
 from System.Collections.Generic import List
 from rebar_selector import RebarSelector
+from pyrevit import forms
 
 # from pyrevit import UI
 
@@ -42,7 +38,7 @@ rs = RebarSelector(doc, uidoc)
 rebar_collector = rs.get_all_rebars()
 
 
-class MainWindow(WPFWindow):
+class MainWindow(forms.WPFWindow):
     def __init__(self, xaml_file):
         WPFWindow.__init__(self, xaml_file)
         # TODO: Improve sorting
